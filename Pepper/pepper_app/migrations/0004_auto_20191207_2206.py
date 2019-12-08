@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pepper', '0003_auto_20191207_2017'),
+        ('pepper_app', '0003_auto_20191207_2017'),
     ]
 
     operations = [
@@ -23,19 +23,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='item',
             name='category',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='pepper.Category'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='pepper_app.Category'),
         ),
         migrations.CreateModel(
             name='Subcategory',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pepper.Category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pepper_app.Category')),
             ],
         ),
         migrations.AddField(
             model_name='item',
             name='subcategory',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='pepper.Subcategory'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='pepper_app.Subcategory'),
         ),
     ]

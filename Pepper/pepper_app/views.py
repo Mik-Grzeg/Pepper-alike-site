@@ -12,20 +12,20 @@ class ItemCreateView(CreateView):
     """
     View to create an item
     """
-    template_name = 'pepper/create_item.html'
+    template_name = 'pepper_app/create_item.html'
     form_class = ItemModelForm
-    success_url = reverse_lazy('pepper')
+    success_url = reverse_lazy('pepper_app')
     queryset = Item.objects.all()
 
     def get_success_url(self):
-        return '/pepper/'
+        return '/pepper_app/'
 
 
 def load_subcategories(request):
     category_id = request.GET.get('category')
     subcategories = Subcategory.objects.filter(category_id=category_id).order_by('name')
    # print(subcategories)
-    return render(request, 'pepper/list.html', {'subcategories': subcategories})
+    return render(request, 'pepper_app/list.html', {'subcategories': subcategories})
 
 
 

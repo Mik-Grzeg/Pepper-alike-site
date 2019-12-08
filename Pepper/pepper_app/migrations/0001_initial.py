@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='pepper.Category')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='pepper_app.Category')),
             ],
         ),
         migrations.CreateModel(
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('retail_price', models.FloatField()),
                 ('still_up_to_date', models.BooleanField(default=True)),
                 ('pub_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pepper.Category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pepper_app.Category')),
             ],
             options={
                 'ordering': ['-pub_date'],
