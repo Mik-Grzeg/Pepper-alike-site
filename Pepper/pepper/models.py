@@ -10,23 +10,26 @@ class Category(models.Model):
     Model of a category of items,
     contains also subcategories
     """
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
-    def getting_parent_category(self):
-        while self.parent is not None:
-            self = self.parent
-        return self
+
+class Subcategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Item(models.Model):
     """
     Model of an item with reduced price.
     """
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100)
     url = models.URLField(blank=True)
     description = models.TextField(blank=True)
