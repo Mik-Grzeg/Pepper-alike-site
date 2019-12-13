@@ -29,8 +29,9 @@ class Item(models.Model):
     Model of an item with reduced price.
     """
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=100)
+    slugged_title = models.SlugField(blank=True)
     url = models.URLField(blank=True)
     description = models.TextField(blank=True)
     original_price = models.FloatField(blank=True, null=True)
@@ -43,7 +44,14 @@ class Item(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return '/%s/' % slugify(self.title)
+        return reverse("item-detail", kwargs={"slug": slugify(self.title)})
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Newly created objects, so set slug
+            self.slugged_title = slugify(self.title)
+
+            super(Item, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['-pub_date']

@@ -4,6 +4,17 @@ from .models import Item, Subcategory, Category
 
 
 class ItemModelForm(forms.ModelForm):
+    title = forms.CharField(label='',
+                            widget=forms.Textarea(
+                                attrs={
+                                    "placeholder": "Title of the steal",
+                                    "rows": 1,
+                                    "cols": 50,
+                                }))
+    description = forms.CharField(label='', widget=forms.Textarea(attrs={"placeholder": "Few words about it"}))
+
+    retail_price = forms.FloatField()
+
     class Meta:
         model = Item
         fields = (
@@ -12,28 +23,26 @@ class ItemModelForm(forms.ModelForm):
             'title',
             'description',
             'url',
-            'slug',
             'pub_date',
             'original_price',
             'retail_price',
             'still_up_to_date',
             'img')
-        exclude = ('slug',
-                   'pub_date',
-                   'still_up_to_date')
+        exclude = (
+            'slugged_title',
+            'pub_date',
+            'still_up_to_date')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['subcategory'].queryset = Subcategory.objects.none()
-        #print(self.data)
 
         if 'category' in self.data:
             try:
                 category_id = int(self.data.get('category'))
-                self.fields['subcategory'].queryset = Subcategory.objects.filter(category_id=category_id).order_by('name')
+                self.fields['subcategory'].queryset = \
+                    Subcategory.objects.filter(category_id=category_id).order_by('name')
             except(ValueError, TypeError):
                 pass
         elif self.instance.pk:
             self.fields['subcategory'].queryset = self.instance.category.subcategory_set.order_by('name')
-        #print(self.fields['subcategory'].queryset)
-

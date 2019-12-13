@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for item in items %}
+        <p><a href="{% url 'item-detail' item.id item.slugged_title %}">{{ item.title }}</a></p>
+    {% endfor %}
+
+{% endblock %}
