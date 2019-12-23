@@ -38,7 +38,7 @@ class Item(models.Model):
     retail_price = models.FloatField(blank=True, null=True)
     still_up_to_date = models.BooleanField(default=True)
     pub_date = models.DateTimeField(default=timezone.now)
-    img = models.ImageField(blank=True)
+    img = models.ImageField(blank=True, upload_to='pictures/')
 
     def __str__(self):
         return self.title
@@ -49,9 +49,12 @@ class Item(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created objects, so set slug
+            #self.img = self.compress_image(selfimg)
             self.slugged_title = slugify(self.title)
 
             super(Item, self).save(*args, **kwargs)
+
+
 
     class Meta:
         ordering = ['-pub_date']

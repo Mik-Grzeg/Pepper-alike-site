@@ -6,5 +6,7 @@
     <p>{{ item.description }}</p>
     <p>{{ item.original_price }}</p>
     <p>{{ item.retail_price }}</p>
-
+    {% if item.url %}
+        <a href="{{ item.url }}">Link</a>
+    {% endif %}
 {% endblock %}

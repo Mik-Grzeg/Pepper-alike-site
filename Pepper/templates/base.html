@@ -1,4 +1,6 @@
 <!doctype html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'pepper_app/style.css' %}">
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
@@ -21,8 +23,11 @@
   </head>
   <body>
     <h1>Steals</h1>
-    <hr>
+    <p><a href="{% url 'item-create'%}">Add new steal</a></p>
+        <hr>
+
     {% block content %}
+
     {% endblock %}
   </body>
 </html>

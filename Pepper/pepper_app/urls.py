@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
+
 #app_name = 'pepper_app'
 urlpatterns = [
     path('', views.ItemsListView.as_view(), name='items-list'),

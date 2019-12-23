@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
@@ -31,6 +31,18 @@ class ItemCreateView(CreateView):
 
     def get_success_url(self):
         return self.success_url
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(self.success_url)
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 def load_subcategories(request):

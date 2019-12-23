@@ -4,7 +4,7 @@
 
   <h2>What's the steal?</h2>
 
-  <form method="post" id="createItem" data-subcategories-url="{% url 'ajax_load_subcategories' %}" novalidate>
+  <form method="post" id="createItem" enctype="multipart/form-data" data-subcategories-url="{% url 'ajax_load_subcategories' %}" novalidate>
     {% csrf_token %}
     <table>
       {{ form.as_table }}
