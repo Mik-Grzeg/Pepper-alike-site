@@ -13,8 +13,6 @@ class ItemModelForm(forms.ModelForm):
                                 }))
     description = forms.CharField(label='', widget=forms.Textarea(attrs={"placeholder": "Few words about it"}))
 
-    retail_price = forms.FloatField()
-
     class Meta:
         model = Item
         fields = (
@@ -26,6 +24,7 @@ class ItemModelForm(forms.ModelForm):
             'pub_date',
             'original_price',
             'retail_price',
+            'currency',
             'still_up_to_date',
             'img')
         exclude = (
@@ -46,3 +45,16 @@ class ItemModelForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['subcategory'].queryset = self.instance.category.subcategory_set.order_by('name')
+
+    def clean(self):
+        cleaned_data = super(ItemModelForm, self).clean()
+        retail_price_field = cleaned_data.get("retail_price")
+        original_price_field = cleaned_data.get("original_price")
+        currency_field = cleaned_data.get("currency")
+
+        if not retail_price_field and (currency_field or original_price_field):
+            raise forms.ValidationError('Please fill retail price field.')
+        elif retail_price_field and not currency_field:
+            raise forms.ValidationError('Please fill currency field.')
+
+        return cleaned_data
