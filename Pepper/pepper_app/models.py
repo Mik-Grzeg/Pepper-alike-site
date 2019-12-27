@@ -19,6 +19,7 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created objects, so set slug
+            self.name = self.name.title()
             self.slugged_category = slugify(self.name)
 
             super(Category, self).save(*args, **kwargs)

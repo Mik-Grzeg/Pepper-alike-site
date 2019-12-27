@@ -10,12 +10,7 @@
 <html lang="en-us">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'items-list' %}">Steals</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-          aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
+  <a class="navbar-brand" style="font-size: 32px;" href="{% url 'items-list' %}">Steals</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent3">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -26,16 +21,20 @@
         </a>
         <div class="dropdown-menu mega-menu v-3 z-depth-1 bg-secondary py-2 px-3" style="width:500px;"
              aria-labelledby="navbarDropdownMenuLink">
-
+          <form>
           <div class="row">
             <div class="col-md-12 col-xl-12">
-              <a class="menu-item text-light" href="{% url 'categories' %}">All Categories</a>
+              <a class="menu-item text-light" style="text-decoration: none;" href="{% url 'categories' %}">All Categories
+              <svg class="bi bi-chevron-right" width="22" height="22" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+              </a>
             </div>
+            <hr style="background-color: silver; width: 100%;">
             {% for category in categories %}
             <div class="col-md-6 col-xl-4">
                 <ul class="list-unstyled">
-                  <li class="sub-title text-uppercase text-truncate">
-                    <a class="menu-item text-light pl-1 mt-2" href="{% url 'category-filtered-items-list' category.slugged_category %}">
+                  <li class="sub-title text-capitalize text-truncate">
+                    <a class="menu-item text-light pl-1 mt-2" style="width: 100%; text-decoration: none;"
+                       href="{% url 'category-filtered-items-list' category.slugged_category %}">
                       {{ category.name }}
                     </a>
                   </li>
@@ -43,20 +42,25 @@
             </div>
             {% endfor %}
           </div>
+          </form>
         </div>
       </li>
       <li class="nav-item">
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+    <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
+      <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-      <a class="btn btn-outline-light my-2 my-sm-0 mx-2" href="{% url 'item-create' %}">Add New Steal</a>
     </form>
+    <a class="btn btn-outline-light my-2 my-sm-0 mx-2" style="border-color: darkorange;
+      color: DarkOrange;"
+       href="{% url 'item-create' %}">Add New Steal</a>
   </div>
 </nav>
+<body style="background-color: lightgray;">
     {% block content %}
 
     {% endblock %}
+</body>
 </html>

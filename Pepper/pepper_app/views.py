@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.db.models import Q
 
 from .models import Category, Item, Subcategory
 from .forms import ItemModelForm
@@ -36,6 +37,20 @@ class ItemsListView(ListView):
         else:
             # User hasn't chosen any filter so every item is being displayed.
             return Item.objects.order_by('-pub_date')
+
+
+class SearchResultsView(ListView):
+    template_name = 'pepper_app/items_list.html'
+    context_object_name = 'items'
+    model = Item
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Item.objects.filter(Q(title__icontains=query) |
+                                          Q(description__icontains=query) |
+                                          Q(category__name__icontains=query) |
+                                          Q(subcategory__name__icontains=query)
+        return object_list
 
 
 class ItemDetailView(DetailView):
