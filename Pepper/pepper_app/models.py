@@ -70,5 +70,4 @@ class Item(models.Model):
 
     class Meta:
         ordering = ['-pub_date']
-
 # ----------------------Models----------------------------------------------

@@ -49,7 +49,7 @@ class SearchResultsView(ListView):
         object_list = Item.objects.filter(Q(title__icontains=query) |
                                           Q(description__icontains=query) |
                                           Q(category__name__icontains=query) |
-                                          Q(subcategory__name__icontains=query)
+                                          Q(subcategory__name__icontains=query)).order_by('-pub_date')
         return object_list
 
 

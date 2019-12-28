@@ -3,11 +3,13 @@
 {% load percentage %}
 {% block content %}
 
-    <div class="container" style="margin-left: 8%;">
+
+
+    <div class=container" style="width: 70%; margin-left: 6%; padding-top: 30px;">
         <div class="row">
             {% for item in items %}
-                   <div class="col-md-5 col-sm-12 col-lg-3">
-                       <div class="card my-4 text-white bg-dark" style="width:100%;">
+                   <div class="col-md-4 col-sm-12 col-lg-3">
+                       <div class="card my-1 text-white bg-dark" style="max-width: 270px; min-height: 375px;">
                            <div class="img-frame" style="height: 200px;">
                            <div class="frame" style="display: flex; height: 200px; width: 100%; position: relative;
                              justify-content: center; align-items: center;">
@@ -17,7 +19,7 @@
                            {% endif %}
                            </div>
                            </div>
-                           <div class="card-body" style="">
+                           <div class="card-body">
                                 <h5 class="card-title text-truncate">{{ item.title }}</h5>
                                 {% if item.retail_price %}
                                     <div class="row">
