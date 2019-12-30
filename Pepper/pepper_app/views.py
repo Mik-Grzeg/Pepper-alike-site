@@ -2,11 +2,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 from .models import Category, Item, Subcategory
 from .forms import ItemModelForm
 
+from django.contrib.messages.views import SuccessMessageMixin
+from bootstrap_modal_forms.mixins import PassRequestMixin
+from bootstrap_modal_forms.generic import BSModalLoginView
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 # ------------------------------------------------------------------
 
@@ -78,17 +84,19 @@ class ItemCreateView(CreateView):
     def get_success_url(self):
         return self.success_url
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class
-        return render(request, self.template_name, {'form': form})
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect(self.success_url)
-        else:
-            return render(request, self.template_name, {'form': form})
+class SignUpView(PassRequestMixin, SuccessMessageMixin, CreateView):
+    form_class = CustomUserCreationForm
+    template_name = 'pepper_app/signup.html'
+    success_message = 'Success: Sign up succeeded. You can now log in.'
+    success_url = reverse_lazy('items-list')
+
+
+class CustomLoginView(BSModalLoginView):
+    authentication_form = CustomAuthenticationForm
+    template_name = "pepper_app/login.html"
+    success_message = "Success: You were successfully logged in."
+    extra_context = dict(success_url=reverse_lazy('items-list'))
 
 
 def load_subcategories(request):

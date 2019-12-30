@@ -11,5 +11,7 @@ urlpatterns = [
     path('create/', views.ItemCreateView.as_view(), name='item-create'),
     path('categories/', views.ItemsListView.as_view(), name='categories'),
     path('search/', views.SearchResultsView.as_view(), name='search'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path('ajax/load-subcategories/', views.load_subcategories, name='ajax_load_subcategories'),
 ]
